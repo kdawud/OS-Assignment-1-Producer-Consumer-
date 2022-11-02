@@ -41,7 +41,7 @@ int main(){
     mutex = sem_open("sema3",O_CREAT,0666,1);
 
 
-//for loop that waits until it should consume, then decrements mutex and consumes
+//for loop that waits until it should consume, then decrements table and consumes
     for(int i = 0; i < 5; ++i){
         sem_wait(&full); 
         sleep(1);
