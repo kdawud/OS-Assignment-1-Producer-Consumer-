@@ -24,7 +24,7 @@ int main(){
      int * table;
    
   
-     shm_fd = shm_open("name",O_CREAT | O_RDWR, 0666);
+     shm_fd = shm_open("tbl",O_CREAT | O_RDWR, 0666);
 
      if(shm_fd = -1){
         exit(1);
@@ -33,9 +33,9 @@ int main(){
      table = mmap(0, sizeof(int), PROT_READ | PROT_WRITE, MAP_SHARED, shm_fd, 0);
 
 
-    empty = sem_open("sema1", O_CREAT,0666,0);
-    full = sem_open("sema2", O_CREAT, 0666, 3);
-    mutex = sem_open("sema3",O_CREAT,0666,1);
+    empty = sem_open("s1", O_CREAT,0666,0);
+    full = sem_open("s2", O_CREAT, 0666, 3);
+    mutex = sem_open("s3",O_CREAT,0666,1);
 
     for(int i = 0; i < 5; ++i){
         sem_wait(&empty); 
@@ -50,9 +50,9 @@ int main(){
     sem_close(&empty);
     sem_close(&mutex);
 
-    sem_unlink("sema1");
-    sem_unlink("sema2");
-    sem_unlink("sema3");
+    sem_unlink("s1");
+    sem_unlink("s2");
+    sem_unlink("s3");
 
 
     sem_destroy(&mutex);
@@ -61,7 +61,7 @@ int main(){
 
     munmap(table, sizeof(int));
     close(shm_fd);
-    shm_unlink("name");
+    shm_unlink("tbl");
     return 0;
 }
 
